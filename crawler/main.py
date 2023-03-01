@@ -43,6 +43,7 @@ class Crawler:
         download = driver.find_element(By.ID, "HyperLink_DownloadCSV")
         download.click()
         sleep(5)
+        driver.close()
 
     def captcha_solve(self, img):
         with open(img, "rb") as f:
