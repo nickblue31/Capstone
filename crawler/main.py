@@ -12,7 +12,7 @@ class Crawler:
         self.url = "https://bsr.twse.com.tw/bshtm/bsMenu.aspx"
 
     # main function
-    def crawl(self):
+    def crawl(self, id):
         options = Options()
         options.chrome_executable_path = "chromedriver.exe"
         # customizing location of downloaded files
@@ -25,7 +25,7 @@ class Crawler:
         driver = webdriver.Chrome(options=options)
         driver.get(self.url)
 
-        # extracting captcha image and solving them for verification
+        # extracting captcha image
         img = driver.find_elements(By.TAG_NAME, "img")[1]
         urlretrieve(img.get_attribute("src"), "captcha.png")
         captcha = driver.find_element(By.NAME, "CaptchaControl1")
@@ -33,7 +33,7 @@ class Crawler:
 
         # filling in stock code
         stock_id = driver.find_element(By.ID, "TextBox_Stkno")
-        stock_id.send_keys("0050")
+        stock_id.send_keys(id)
 
         # sending out request
         btn = driver.find_element(By.ID, "btnOK")
@@ -54,4 +54,4 @@ class Crawler:
 
 if __name__ == "__main__":
     crawler = Crawler()
-    crawler.crawl()
+    crawler.crawl("0050")
